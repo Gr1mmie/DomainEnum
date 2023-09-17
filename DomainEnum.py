@@ -222,3 +222,7 @@ for subdomain in domainDataResp.subdomains:
     sitemaps.append(robots.sitemap)
     print("\n")
 
+for sitemap in sitemaps:
+    print(f"{sitemap}:\n")
+    WebHunter.sitemapCrawler(sitemap)
+    print("\n")
