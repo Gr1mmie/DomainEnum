@@ -207,22 +207,25 @@ class Utils:
     def APICheck() -> bool:
         return True
 
-searcherObj = Searcher(ip, api_key)
+if __name__ == "__main__":
+    input = input("Enter domain you want to enumerate.")
 
-domainDataResp:DomainQueryResponse = WebHunter.retDomainData("[DOMAIN]", api_key)
+    searcherObj = Searcher(ip, api_key)
 
-sitemaps = []
+    domainDataResp:DomainQueryResponse = WebHunter.retDomainData(input, api_key)
 
-for subdomain in domainDataResp.subdomains:
-    print(f"{subdomain}.{domainDataResp.domain}")
-    robots:RobotsResponse = WebHunter.robotsHunter(f"{subdomain}.{domainDataResp.domain}")
-    print(f"ALLOW: {robots.allowList}")
-    print(f"DISALLOW: {robots.disallowList}")
-    print(f"SITEMAP: {robots.sitemap}")
-    sitemaps.append(robots.sitemap)
-    print("\n")
+    sitemaps = []
 
-for sitemap in sitemaps:
-    print(f"{sitemap}:\n")
-    WebHunter.sitemapCrawler(sitemap)
-    print("\n")
+    for subdomain in domainDataResp.subdomains:
+        print(f"{subdomain}.{domainDataResp.domain}")
+        robots:RobotsResponse = WebHunter.robotsHunter(f"{subdomain}.{domainDataResp.domain}")
+        print(f"ALLOW: {robots.allowList}")
+        print(f"DISALLOW: {robots.disallowList}")
+        print(f"SITEMAP: {robots.sitemap}")
+        sitemaps.append(robots.sitemap)
+        print("\n")
+
+    for sitemap in sitemaps:
+        print(f"{sitemap}:\n")
+        WebHunter.sitemapCrawler(sitemap)
+        print("\n")    
